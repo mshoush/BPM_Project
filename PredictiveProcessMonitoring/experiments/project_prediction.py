@@ -11,7 +11,7 @@ from sklearn.pipeline import FeatureUnion, Pipeline
 import os
 
 import pickle
-
+import joblib
 import xgboost as xgb
 
 
@@ -164,5 +164,8 @@ for bucket in set(bucket_assignments_test):
 
 dt_results = pd.DataFrame({"actual": test_y_all, "predicted": preds_all, "nr_events": nr_events_all})
 
+dt_results.to_csv('dt_results.csv',index=False)
+
 print("The AUC is: %s\n" % (roc_auc_score(dt_results.actual, dt_results.predicted)))
 
+joblib.dump(pipeline, 'transform_predict.joblib')
