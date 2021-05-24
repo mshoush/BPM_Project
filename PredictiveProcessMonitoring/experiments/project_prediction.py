@@ -63,6 +63,7 @@ cls_encoder_args = {'case_id_col': dataset_manager.case_id_col,
 # split into training and test
 train, test = dataset_manager.split_data_strict(data, train_ratio, split="temporal")
 
+
 dt_test_prefixes = dataset_manager.generate_prefix_data(test, ngram_size)
 
 
@@ -97,6 +98,7 @@ bucket_assignments_test = bucketer.predict(dt_test_prefixes)
 
 preds_all = []
 test_y_all = []
+train_y_all=[]
 nr_events_all = []
 
 for bucket in set(bucket_assignments_test):
@@ -118,7 +120,7 @@ for bucket in set(bucket_assignments_test):
         dt_train_bucket = dataset_manager.get_relevant_data_by_indexes(dt_train_prefixes,
                                                                        relevant_train_cases_bucket)  # one row per event
         train_y = dataset_manager.get_label_numeric(dt_train_bucket)
-
+        train_y_all.extend(train_y)
         if len(set(train_y)) < 2:
             preds = [train_y[0]] * len(relevant_test_cases_bucket)
 
@@ -165,6 +167,10 @@ for bucket in set(bucket_assignments_test):
 dt_results = pd.DataFrame({"actual": test_y_all, "predicted": preds_all, "nr_events": nr_events_all})
 
 dt_results.to_csv('dt_results.csv',index=False)
+train.to_csv('train.csv',index=False)
+test.to_csv('test.csv',index=False)
+dt_train_prefixes.to_csv('dt_train_prefixes.csv',index=False)
+dt_test_prefixes.to_csv('dt_test_prefixes.csv',index=False)
 
 print("The AUC is: %s\n" % (roc_auc_score(dt_results.actual, dt_results.predicted)))
 
