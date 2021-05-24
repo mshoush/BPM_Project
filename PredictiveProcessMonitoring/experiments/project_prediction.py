@@ -165,8 +165,9 @@ for bucket in set(bucket_assignments_test):
 
 
 dt_results = pd.DataFrame({"actual": test_y_all, "predicted": preds_all, "nr_events": nr_events_all})
-
+dt_y_train= pd.DataFrame({'train_y': train_y_all})
 dt_results.to_csv('dt_results.csv',index=False)
+dt_y_train.to_csv('dt_y_train',index=False)
 train.to_csv('train.csv',index=False)
 test.to_csv('test.csv',index=False)
 dt_train_prefixes.to_csv('dt_train_prefixes.csv',index=False)
