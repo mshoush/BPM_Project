@@ -15,7 +15,7 @@ This project is a solution for [Task 9](https://sway.office.com/zamf9VyCcmbeRtyt
                                
     2. Predictive model: go to the predictive process monitoring folder and run the below commands.
       
-                                <To be added by Gamal> 
+                                run the python file "project_prediction.py" inside the PredictiveProcessMonitoring/experiments folder
                                 
     3. SHAP analysis:
           
